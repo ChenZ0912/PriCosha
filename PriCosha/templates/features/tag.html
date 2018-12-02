@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="UTF-8">
+</head>
+<html lang="en">
+	<body>
+		<div class="container">
+			<h3>Here are your tag request:</h3>
+			<table class="table">
+				<thead class="thead-light">
+					<th scope="col">item_id</th>
+					<th scope="col">tagtime</th>
+					<th scope="col">email_tagger</th>
+					<th scope="col">email_post</th>
+					<th scope="col">post_time</th>
+					<th scope="col">item_name</th>
+					<th scope="col">action</th>
+					<th scope="col">submit</th>
+				</thead>
+				<tbody>
+				{% for line in tags %}
+					<tr>
+						<th scope="row">{{line.item_id}}</th>
+						<td>{{line.tagtime}}</td>
+						<td>{{line.email_tagger}}</td>
+						<td>{{line.email_post}}</td>
+						<td>{{line.post_time}}</td>
+						<td>{{line.item_name}}</td>
+						<form action="/ManageTag" method="POST">
+						<td>
+							<input type = "radio" name = "status" value="1" /> Accept</br>
+							<input type = "radio" name = "status" value="0" /> Reject</br>
+							<input type = "hidden" name = "email_tagged", value = "{{person}}"/>
+							<input type = "hidden" name = "email_tagger", value = "{{line.email_tagger}}"/>
+							<input type = "hidden" name = "item_id", value = "{{line.item_id}}"/>
+							<input type = "hidden" name = "item_id", value = "{{line.status}}"/>
+						</td>
+						<td>
+							<input type = "submit" name = "tagResponse" value = "Submit">
+						</td>
+						</form>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</body>
+</html>

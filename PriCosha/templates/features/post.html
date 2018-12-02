@@ -1,0 +1,127 @@
+<head>
+	<style>
+	.reveal-if-active {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transform: scale(0.8);
+  transition: 0.5s;
+
+}
+input[type="radio"]:checked ~ .reveal-if-active {
+    opacity: 1;
+    max-height: 100px;
+    overflow: visible;
+    padding: 10px 20px;
+    transform: scale(1);
+  }
+	</style>
+	<script>
+	var FormStuff = {
+
+  init: function() {
+    this.applyConditionalRequired();
+    this.bindUIActions();
+  },
+
+  bindUIActions: function() {
+    $("input[type='radio']").on("change", this.applyConditionalRequired);
+  },
+
+  applyConditionalRequired: function() {
+
+    $(".require-if-active").each(function() {
+      var el = $(this);
+      if ($(el.data("require-pair")).is(":checked")) {
+        el.prop("required", true);
+      } else {
+        el.prop("required", false);
+      }
+    });
+  }
+};
+
+FormStuff.init();
+	</script>
+</head>
+
+<div class = "container">
+	<form class = "form-horizontal" action = "/post" method = "POST">
+		<div class = "form-group row">
+			<label class = "col-form-label col-lg-1" for="item_name">Item:</label>
+			<div class = "col-lg-4">
+				<input type = "text" class="form-control" id = "item_name" placeholder="Item Name" name = "item_name" required>
+			</div>
+		</div>
+
+		<div class = "form-group">
+			<label class = "col-form-label col-lg-1" for="file_path">File Path:</label>
+			<div class = "col-lg-4">
+				<input type = "text" class = "form-control" id = "file_path" placeholder = "File Path" name = "file_path" required>
+			</div>
+		</div>
+
+		<div class = "form-group">
+				<div class="form-check form-check-inline col-lg-1">
+					<input class="form-check-input"type="radio" name="is_pub" id="choice-public" value = "1" checked>
+					<label class="from-check-label"for="choice-public" >Public</label>
+				</div>
+
+				<div class="form-check form-check-inline">
+					{% if groups %}
+						<input class="form-check-input" type="radio" name="is_pub" id="choice-private" value="0">
+						<label class="form-check-label" for="choice-private" >Private</label>
+						<div class = "reveal-if-active">
+							<label for="which-fg">Choose your friend groups:</label>
+							<select class="form-control require-if-active" data-require-pair="#choice-private" id="which-fg" name="fgSharedWith" multiple>
+								{% for group in groups %}
+									<option value = "{{group.fg_name}}">{{group.fg_name}}</option>
+								{% endfor %}
+							</select>
+						</div>
+					{% endif %}
+					</br>
+				</div>
+		</div>
+
+		<div class = "form-group">
+			<div class = "control-offset-2 col-2">
+				<button type = "submit" class = "btn btn-default" value="submit">Submit</button>
+			</div>
+		</div>
+	</form>
+</div>
+	<!--<form action="/post" method="POST">-->
+		<!--<input type = "text" name = "item_name" placeholder="Item Name" required/></br>-->
+		<!--<input type = "text" name = "file_path" placeholder="File Path" required/></br>-->
+		<!--<input type = "radio" name = "is_pub" value="1" checked/> Public</br>-->
+
+		<!--<input type= "submit" value = Post /></br>-->
+	<!--</form>-->
+
+
+<div class = "container">
+	<h2>Here are your content items:</h2>
+	<table class = "table table-hover">
+		<thead>
+			<th>item_id</th>
+			<th>email_post</th>
+			<th>Post Time</th>
+			<th>file_path</th>
+			<th>item_name</th>
+		</thead>
+		<tbody>
+			{% for line in posts %}
+				<tr>
+					<td>{{line.item_id}}</td>
+					<td>{{line.email_post}}</td>
+					<td>{{line.post_time}}</td>
+					<td>{{line.file_path}}</td>
+					<td>{{line.item_name}}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+
+</div>

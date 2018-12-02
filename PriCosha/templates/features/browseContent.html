@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<script>
+		function message(){
+			alert("{{message}}");
+		}
+	</script>
+</head>
+
+<body>
+	<div class = "container">
+		<h2>Here are the content items that were posted within the last 24 hours:</h2>
+		<table class = "table table-striped">
+			<thead>
+				<th>item_id</th>
+				<th>email_post</th>
+				<th>Post Time</th>
+				<th>file_path</th>
+				<th>item_name</th>
+				<th>Tag</th>
+				<th>Rate</th>
+			</thead>
+			<tbody>
+				{% for line in posts %}
+					<tr>
+						<td>{{line.item_id}}</td>
+						<td>{{line.email_post}}</td>
+						<td>{{line.post_time}}</td>
+						<td>{{line.file_path}}</td>
+						<td>{{line.item_name}}</td>
+						<td>
+							<button type="submit" class="btn btn-secondary" data-toggle="modal" data-target="#tagModal">tag</button>
+							<div class="modal fade" id="tagModal" tabindex="-1" role="dialog" aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="tagModalLabel">Tag</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<form action="/tag" method="POST">
+												<div class="form-row">
+													<div class="form-group">
+														<label for="tagged-email">Email:</label>
+														<input type="email" class="form-control" id="tagged-email" name="taggedEmail" placeholder="Tagged Email">
+													</div>
+												</div>
+												<input type="hidden" name="item_id" value="{{line.item_id}}">
+												<button type="submit" class="btn btn-primary" name="submit_button" value="Tag">Submit</button>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</td>
+
+						<td>
+							<div class="btn-group" role="group">
+								<form action="/rate" method="POST">
+									<button id="dropdownMenu" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										Rate
+									</button>
+									<div class="dropdown-menu" aria-labelledby="dropdownMenu">
+										<button type="submit" value="U+1F60D" name="submit_button" value="emoji">&#x1F60D</button>
+  										<button type="submit" value="U+1F602" name="submit_button" value="emoji">&#x1F602</button>
+  										<button type="submit" value="U+1F605" name="submit_button" value="emoji">&#x1F605</button>
+										<button type="submit" value="U+1F643" name="submit_button" value="emoji">&#x1F643</button>
+										<button type="submit" value="U+1F62A" name="submit_button" value="emoji">&#x1F62A</button>
+									</div>
+									<input type="hidden" name="item_id" value="{{line.item_id}}">
+								</form>
+							</div>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+
+
+<!--<div class = "container">-->
+	<!--<form action="/tag" method="POST">-->
+		<!--<select name="item_id">-->
+			<!--{% for post in posts %}-->
+			<!--<option value = "{{post.item_id }}">{{post.item_id}}</option>-->
+			<!--{% endfor %}-->
+		<!--</select>-->
+		<!--<input type = "email" name = "taggedEmail" placeholder="Tagged Email" required/>-->
+		<!--<input type = "submit" name = "submit_button" value = "Tag"/><br>-->
+        <!--{% if message %}-->
+        <!--<script>message();</script>-->
+        <!--{% endif %}-->
+	<!--</form>-->
+<!--</div>-->
+
+
+<!--<div class = "container">-->
+	<!--<form action="/rate" method="POST">-->
+		<!--<select name="item_id">-->
+			<!--{% for post in posts %}-->
+			<!--<option value = "{{post.item_id }}">{{post.item_id}}</option>-->
+			<!--{% endfor %}-->
+		<!--</select>-->
+
+		<!--<select name="emoji">-->
+  			<!--<option value=U+1F60D>&#x1F60D</option>-->
+  			<!--<option value=U+1F602>&#x1F602</option>-->
+  			<!--<option value=U+1F605>&#x1F605</option>-->
+			<!--<option value=U+1F643>&#x1F643</option>-->
+			<!--<option value=U+1F62A>&#x1F62A</option>-->
+		<!--</select>-->
+		<!--<input type = "submit" name = "submit_button" value = "Rate"/><br>-->
+	<!--</form>-->
+<!--</div>-->
+</body>
+</html>

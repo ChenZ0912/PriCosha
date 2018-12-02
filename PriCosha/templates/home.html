@@ -1,0 +1,83 @@
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+  	<script type= "text/javascript" src = "{{ url_for('static', filename = 'scripts/active.js') }}"></script>
+	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/hidden.css') }}">
+
+	<script>
+	function createGroup_message() {
+		alert("{{createGroup_message}}");
+    }
+    function addFriend_message() {
+		alert("{{addFriend_message}}");
+    }
+	</script>
+
+	<title>{{fname}} {{lname}}'s Homepage</title>
+</head>
+
+<body>
+
+<div style="color:57068C !important" class="jumbotron" >
+		<div class = "container">
+  			<h1>Welcome {{fname}} {{lname}} </h1>
+			<h2>{{person}}</h2>
+			<h3><a href="/logout">Logout</a></h3>
+		</div>
+</div>
+
+<div class="container">
+  <h3>HomePage</h3>
+  <ul class="nav nav-tabs">
+    <li class = "active">
+		<a href="#publicContent">Public Content</a>
+	</li>
+    <li><a href="#post">Post</a></li>
+    <li><a href="#tag">Tag <span class="badge">{{tags|length}}</span></a></li>
+    <li><a href="#createGroup">Create Group</a></li>
+	<li><a href="#addFriend">Add Friend</a></li>
+  </ul>
+</div>
+
+<div class = "container">
+        <section id="publicContent" class="tab-content active">
+			<div>
+				{% include 'features/browseContent.html' %}
+			</div>
+		</section>
+		<section id="post" class="tab-content hide">
+			<br>
+			<div>
+				{% include 'features/post.html' %}
+			</div>
+		</section>
+		<section id="tag" class="tab-content hide">
+			<div>
+				{% include 'features/tag.html' %}
+			</div>
+        </section>
+        <section id="createGroup" class="tab-content hide">
+			<div>
+				{% include 'features/createGroup.html' %}
+			</div>
+        </section>
+        <section id="addFriend" class="tab-content hide">
+			<div>
+				{% include 'features/addFriends.html' %}
+			</div>
+        </section>
+</div>
+
+</body>
+
+
+</html>

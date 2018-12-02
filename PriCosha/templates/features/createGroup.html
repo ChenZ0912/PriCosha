@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="UTF-8">
+</head>
+<html lang="en">
+<body>
+	<div class="container border-bottom">
+		<h3>Friend Group:</h3>
+		{% if groups %}
+			<table class="table">
+				<thead class="thead-light">
+					<th scope="row">Group Name</th>
+					<th scope="row">Description</th>
+				</thead>
+				<tbody>
+				{% for group in groups %}
+					<tr>
+						<td>{{group.fg_name}}</th>
+						<td>{{group.description}}</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		{% endif %}
+	</div>
+
+	<div class="container">
+		<h3>Create Friend Group</h3>
+		<form action="/createGroup" method="POST" class="form-horizontal">
+			<div class="form-group row">
+				<label for="group-name" class="col-2">Group Name</label>
+				<div class="col-4">
+					<input type="text" class="form-control" name="fg_name" id="group-name" placeholder="Group Name">
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label for="description" class="col-2">Description</label>
+				<div class="col-4">
+					<input type="text" class="form-control" name="description" id="description" placeholder="description">
+				</div>
+			</div>
+
+			<div class="form-row">
+				<div class="form-group col-lg-2">
+					<button type="submit" class="btn btn-primary">Create</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<div class="container">
+		{% if joined_groups %}
+			<h3>My groups</h3>
+			<table class="table">
+				<thead class="thead-light">
+					<th scope="row">Owner Email</th>
+					<th scope="row">Group Name</th>
+				</thead>
+				<tbody>
+					{% for line in joined_groups %}
+					<tr>
+						<td>{{line.owner_email}}</td>
+						<td>{{line.fg_name}}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% endif %}
+	</div>
+</body>
+</html>
